@@ -11,7 +11,7 @@ class HomeView extends GetView<HomeViewController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => HomeViewController());
+     Get.put(HomeViewController(), permanent: true);
     return GetBuilder<HomeViewController>(
       builder: (_) {
         return Scaffold(
@@ -31,18 +31,22 @@ class HomeView extends GetView<HomeViewController> {
                       ),
                       items: controller.cards.entries
                           .map(
-                            (entry) => DismissiblePage(
-                              key: Key(entry.key.toString()),
-                              direction: DismissiblePageDismissDirection.multi,
-                              startingOpacity: 0.5,
-                              onDismissed: () {
-                                controller.cards.remove(entry.key);
-                                controller.update();
-                              },
-                              child: CustomCardWidget(
-                                card: entry.value,
-                                isActive: entry.key == controller.currentIndex,
-                              ),
+                            (entry) => Builder(
+                              builder: (context) {
+                                return DismissiblePage(
+                                  key: Key(entry.key.toString()),
+                                  direction: DismissiblePageDismissDirection.multi,
+                                  startingOpacity: 0.5,
+                                  onDismissed: () {
+                                    controller.cards.remove(entry.key);
+                                    controller.update();
+                                  },
+                                  child: CustomCardWidget(
+                                    card: entry.value,
+                                    isActive: entry.key == controller.currentIndex,
+                                  ),
+                                );
+                              }
                             ),
                           )
                           .toList(),

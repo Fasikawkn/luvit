@@ -31,7 +31,7 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
           carouselController: carouselController,
           itemCount: widget.card.length,
           options: CarouselOptions(
-            autoPlay: false,
+            autoPlay: widget.isActive,
             height: Get.height,
             viewportFraction: 1.0,
             scrollPhysics: const NeverScrollableScrollPhysics(),
